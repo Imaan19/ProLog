@@ -21,3 +21,4 @@ diagnose(Symptom, Cause, Solution) :-
 
 % Example query:
 % ?- diagnose(blue_smoke, Cause, Solution).
+% ?- diagnose(knocking_sound, Cause, Solution).
