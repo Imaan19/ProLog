@@ -44,3 +44,28 @@ start_diagnosis :-
     ),
     write('Thank you for using the Car Fault Diagnosis Expert System!'), nl.
         
+
+    
+    % Enhanced interactive diagnosis for multiple symptoms
+start_diagnosis :-
+    write('Welcome to the Car Fault Diagnosis Expert System!'), nl,
+    write('Please enter the symptoms you are experiencing, separated by commas (e.g., blue_smoke, knocking_sound): '), nl,
+    read_line_to_string(user_input, Input),
+    split_string(Input, ", ", ",", SymptomStrings),
+    findall((Cause, Solution), (member(SymptomString, SymptomStrings),
+                                atom_string(Symptom, SymptomString),
+                                diagnose(Symptom, Cause, Solution)), Results),
+    ( Results \= [] ->
+        write('Diagnoses and recommended solutions based on your symptoms:'), nl,
+        display_results(Results)
+    ;
+        write('Sorry, no diagnosis found for the given symptoms.'), nl
+    ),
+    write('Thank you for using the Car Fault Diagnosis Expert System!'), nl.
+
+% Helper predicate to display results
+display_results([]).
+display_results([(Cause, Solution)|Rest]) :-
+    write('Cause: '), write(Cause), nl,
+    write('Recommended Solution: '), write(Solution), nl, nl,
+    display_results(Rest).
