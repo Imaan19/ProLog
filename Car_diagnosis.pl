@@ -18,6 +18,7 @@ cause(weak_battery, recharge_or_replace_battery).
 diagnose(Symptom, Cause, Solution) :-
     symptom(Symptom, Cause),
     cause(Cause, Solution).
+
 % List of known symptoms for validation
 known_symptom(blue_smoke).
 known_symptom(knocking_sound).
@@ -25,35 +26,19 @@ known_symptom(overheating).
 known_symptom(squealing_brakes).
 known_symptom(dim_headlights).
 
-% Enhanced interactive diagnosis procedure with input validation
-start_diagnosis :-
-    write('Welcome to the Car Fault Diagnosis Expert System!'), nl,
-    write('Please enter the symptom you are experiencing (e.g., blue_smoke, knocking_sound): '), nl,
-    read(UserSymptom),
-    ( known_symptom(UserSymptom) ->
-        ( diagnose(UserSymptom, Cause, Solution) ->
-            write('Diagnosis: '), write(Cause), nl,
-            write('Recommended Solution: '), write(Solution), nl
-        ;
-            write('Sorry, no diagnosis found for the given symptom.'), nl
-        )
-    ;
-        write('Unknown symptom. Please enter a valid symptom.'), nl,
-        write('Known symptoms are: blue_smoke, knocking_sound, overheating, squealing_brakes, dim_headlights.'), nl,
-        start_diagnosis
-    ),
-    write('Thank you for using the Car Fault Diagnosis Expert System!'), nl.
-        
-
-    
-    % Enhanced interactive diagnosis for multiple symptoms
+% Unified interactive diagnosis procedure for single or multiple symptoms
 start_diagnosis :-
     write('Welcome to the Car Fault Diagnosis Expert System!'), nl,
     write('Please enter the symptoms you are experiencing, separated by commas (e.g., blue_smoke, knocking_sound): '), nl,
     read_line_to_string(user_input, Input),
     split_string(Input, ", ", ",", SymptomStrings),
+    diagnose_multiple(SymptomStrings).
+
+% Helper predicate to handle multiple symptoms
+diagnose_multiple(SymptomStrings) :-
     findall((Cause, Solution), (member(SymptomString, SymptomStrings),
                                 atom_string(Symptom, SymptomString),
+                                known_symptom(Symptom),
                                 diagnose(Symptom, Cause, Solution)), Results),
     ( Results \= [] ->
         write('Diagnoses and recommended solutions based on your symptoms:'), nl,
