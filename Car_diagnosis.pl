@@ -34,3 +34,5 @@ start_diagnosis :-
         write('Sorry, no diagnosis found for the given symptom.'), nl
     ),
     write('Thank you for using the Car Fault Diagnosis Expert System!'), nl.
+
+known_symptom(squealing_brakes).
