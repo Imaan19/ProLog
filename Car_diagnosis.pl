@@ -21,3 +21,16 @@ cause(weak_battery, recharge_or_replace_battery).
 diagnose(Symptom, Cause, Solution) :-
     symptom(Symptom, Cause),
     cause(Cause, Solution).
+
+    % Interactive diagnosis procedure
+start_diagnosis :-
+    write('Welcome to the Car Fault Diagnosis Expert System!'), nl,
+    write('Please enter the symptom you are experiencing (e.g., blue_smoke, knocking_sound): '), nl,
+    read(UserSymptom),
+    ( diagnose(UserSymptom, Cause, Solution) ->
+        write('Diagnosis: '), write(Cause), nl,
+        write('Recommended Solution: '), write(Solution), nl
+    ;
+        write('Sorry, no diagnosis found for the given symptom.'), nl
+    ),
+    write('Thank you for using the Car Fault Diagnosis Expert System!'), nl.
