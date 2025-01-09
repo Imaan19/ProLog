@@ -7,6 +7,16 @@ symptom(overheating, coolant_leak).
 symptom(squealing_brakes, worn_brake_pads).
 symptom(dim_headlights, weak_battery).
 
+% Car Fault Diagnosis Expert System 
+% Define solutions for the causes
+
+cause(burning_oil, replace_piston_rings).
+cause(worn_engine_bearings, check_engine_bearings).
+cause(coolant_leak, replace_coolant_hose).
+cause(worn_brake_pads, replace_brake_pads).
+cause(weak_battery, recharge_or_replace_battery).
+
+
 % Rule to diagnose a car problem based on a given symptom
 diagnose(Symptom, Cause, Solution) :-
     symptom(Symptom, Cause),
